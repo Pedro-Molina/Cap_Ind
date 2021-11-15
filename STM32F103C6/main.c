@@ -8,7 +8,8 @@
 void init_RC(void);
 void calculate_RC(void);
 void calculateC(void);
-void imprimir(uint32_t);
+void imprimir(uint32_t, uint32_t, uint32_t,char*);
+void clearLCD(void);
 
 volatile uint16_t adcResult=0,time=0;
 volatile uint32_t capacitancia;
@@ -27,6 +28,7 @@ int main (void)
    GPIOB->BRR = (1<<0);
    init_RC();
    lcd_init();
+   clearLCD();
    while(1){
       TIM2->CNT=0;
       TIM2->CR1=1;
@@ -40,17 +42,18 @@ int main (void)
       time=TIM2->CNT;
       adcResult=0;
       capacitancia= time/(8);
-      //imprimir(capacitancia);
+      imprimir(capacitancia,4,0,"nF");
       TIM2->CR1=0;
       GPIOB->BRR |= (1<<0);
-      delay_us(500000);
+      delay_us(250000);
       
       L2 = 1000000.0*RLC_measure()-100;
-      
-      delay_us(5000);
+      imprimir(L2,4,1,"uH");
+      delay_us(250000);
    }
 
 }   
+ 
  
 
 void init_RC(){
@@ -63,27 +66,38 @@ void init_RC(){
    delay_us(10000);
 }
 
-void imprimir(uint32_t dato){
-   uint32_t aux,div=0,i,div10=1;
-   lcd_clr();
-   lcd_gotoXY(0, 0);
-   while(dato != 0){
-      aux = dato;
-      div=0;
-      while((aux /(int) 10) != 0){
-         aux = aux / (int)10;
-         div++;
-      }
-      lcd_sendData('0'+aux);
-      delay_us(50);
-      if (div==0)
-         div=1;
-      div10=1;
-      for(i=0;i<div;i++){
-         div10= div10*10;
-      }
-      dato = dato / div10;
+void imprimir(uint32_t dato, uint32_t x, uint32_t y, char* medida){
+   int aux,cont=0;
+   unsigned char vec[16];
+   lcd_gotoXY(x,y);
+   while (dato > 0){
+      aux = dato - ((dato / 10)*10);
+      dato=dato / 10;
+      vec[cont++] = (uint32_t)(aux + '0'); 
    }
+   while(cont>0){
+      lcd_sendData((uint8_t)vec[--cont]);
+   }
+   lcd_string(medida,2);
 }
+
+void clearLCD(){
+   lcd_clr();
+   lcd_gotoXY(0,0);
+   lcd_string("C: ",3);
+   lcd_gotoXY(0,1);
+   lcd_string("L: ",3);
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
