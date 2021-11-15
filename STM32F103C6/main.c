@@ -10,6 +10,7 @@ void calculate_RC(void);
 void calculateC(void);
 void imprimir(uint32_t, uint32_t, uint32_t,char*);
 void clearLCD(void);
+void medirRC(void);
 
 volatile uint16_t adcResult=0,time=0;
 volatile uint32_t capacitancia;
@@ -30,20 +31,7 @@ int main (void)
    lcd_init();
    clearLCD();
    while(1){
-      TIM2->CNT=0;
-      TIM2->CR1=1;
-      GPIOB->BSRR |= (1<<0);
-      while(adcResult<2589){
-         ADC1->SQR3 = 1; //choose channel 1 as input
-         ADC1->CR2 = 1; //ADCON = 1 star conversion
-         while((ADC1->SR&(1<<1)) == 0);
-         adcResult=ADC1->DR;
-      }
-      time=TIM2->CNT;
-      adcResult=0;
-      capacitancia= time/(8);
-      imprimir(capacitancia,4,0,"nF");
-      TIM2->CR1=0;
+      medirRC();
       GPIOB->BRR |= (1<<0);
       delay_us(250000);
       
@@ -89,7 +77,22 @@ void clearLCD(){
    lcd_string("L: ",3);
 }
 
-
+void medirRC(){
+   TIM2->CNT=0;
+   TIM2->CR1=1;
+   GPIOB->BSRR |= (1<<0);
+   while(adcResult<2580){
+      ADC1->SQR3 = 1; //choose channel 1 as input
+      ADC1->CR2 = 1; //ADCON = 1 star conversion
+      while((ADC1->SR&(1<<1)) == 0);
+      adcResult=ADC1->DR;
+   }
+   time=TIM2->CNT;
+   adcResult=0;
+   capacitancia= time/(8);
+   imprimir(capacitancia,4,0,"nF");
+   TIM2->CR1=0;
+}
 
 
 

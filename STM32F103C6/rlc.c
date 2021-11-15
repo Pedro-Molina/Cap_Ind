@@ -17,6 +17,7 @@ void RLC_init(){
 }
 float RLC_measure(){
 	GPIOB -> ODR|=(1<<0);
+	TIM2->CNT=0;
 	TIM2->CR1 = 1; /* start counting up */
 	 TIM2->CCR3 =0;
 	while((TIM2->SR  & (1<<3)) == 0); /* wait until the CC3IF flag*/
