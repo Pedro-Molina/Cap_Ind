@@ -32,14 +32,16 @@ BIN2HEX=fromelf.exe
 #        C:/Users/evari/Desktop/borrar/STM32F103C6/lcd.c
 #     C:/Users/evari/Desktop/borrar/STM32F103C6/Debug/rlc.o: TOOL=CC
 #        C:/Users/evari/Desktop/borrar/STM32F103C6/rlc.c
+#     C:/Users/evari/Desktop/borrar/STM32F103C6/Debug/rc.o: TOOL=CC
+#        C:/Users/evari/Desktop/borrar/STM32F103C6/rc.c
 
 # Build tree:
 all:	Debug
 
 Debug:	Debug.elf
 
-Debug.elf:	main.o SYSTEM~1.o STARTU~1.o delay.o lcd.o rlc.o 
-	$(LD)  $(LDFLAGS)  "main.o" "SYSTEM~1.o" "STARTU~1.o" "delay.o" "lcd.o" "rlc.o" --output "Debug.elf"
+Debug.elf:	main.o SYSTEM~1.o STARTU~1.o delay.o lcd.o rlc.o rc.o 
+	$(LD)  $(LDFLAGS)  "main.o" "SYSTEM~1.o" "STARTU~1.o" "delay.o" "lcd.o" "rlc.o" "rc.o" --output "Debug.elf"
 
 main.o:	../main.c 
 	$(CC) $(CCFLAGS)  "../main.c" -c -o "main.o"
@@ -59,6 +61,9 @@ lcd.o:	../lcd.c
 rlc.o:	../rlc.c 
 	$(CC) $(CCFLAGS)  "../rlc.c" -c -o "rlc.o"
 
+rc.o:	../rc.c 
+	$(CC) $(CCFLAGS)  "../rc.c" -c -o "rc.o"
+
 # tidy - delete all temporary files which are not involved in the target generation
 tidy:
 
@@ -71,3 +76,4 @@ clean:	tidy
 	rm -rf delay.o
 	rm -rf lcd.o
 	rm -rf rlc.o
+	rm -rf rc.o

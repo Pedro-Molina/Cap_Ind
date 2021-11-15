@@ -76,3 +76,28 @@ void lcd_clr(void)	//Clears LCD
 }
 
 
+void imprimir(uint32_t dato, uint32_t x, uint32_t y, char* medida){
+   int aux,cont=0;
+   unsigned char vec[16];
+   lcd_gotoXY(x,y);
+   while (dato > 0){
+      aux = dato - ((dato / 10)*10);
+      dato=dato / 10;
+      vec[cont++] = (uint32_t)(aux + '0'); 
+   }
+   while(cont>0){
+      lcd_sendData((uint8_t)vec[--cont]);
+   }
+   lcd_string(medida,2);
+}
+
+void clearLCD(){
+   lcd_clr();
+   lcd_gotoXY(0,0);
+   lcd_string("C: ",3);
+   lcd_gotoXY(0,1);
+   lcd_string("L: ",3);
+}
+
+
+

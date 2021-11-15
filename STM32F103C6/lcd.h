@@ -24,5 +24,6 @@ void lcd_string(uint8_t* , uint8_t );
 void lcd_gotoXY(uint8_t x, uint8_t y);
 void lcd_clr(void);
 
-
+void imprimir(uint32_t, uint32_t, uint32_t,char*);
+void clearLCD(void);
 
