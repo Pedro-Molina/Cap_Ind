@@ -7,11 +7,11 @@ PROJECT =
 MCU = STM32F103C6
 COMPILER = "Keil for ARM"
 TARGET = Debug
-SHELL = C:\Windows\system32\cmd.exe
+SHELL = C:\WINDOWS\system32\cmd.exe
 
 ## Tools general options
 ASMFLAGS=--cpu=cortex-m3 --thumb -g
-CCFLAGS=--cpu=cortex-m3 --thumb -I.. -I../../../../../../Keil_v5/ARM/CMSIS/Include -g
+CCFLAGS=--cpu=cortex-m3 --thumb -I.. -IC:/Keil_v5/ARM/CMSIS/Include -g
 LDFLAGS=--scatter ../stm32f103x6.sct
 
 ## Processing Tools
@@ -19,38 +19,38 @@ CC=armcc.exe
 LD=armlink.exe
 ASM=armasm.exe
 BIN2HEX=fromelf.exe
-#  C:/Users/evari/Desktop/borrar/STM32F103C6/Debug/Debug.elf: TOOL=LD
-#     C:/Users/evari/Desktop/borrar/STM32F103C6/Debug/main.o: TOOL=CC
-#        C:/Users/evari/Desktop/borrar/STM32F103C6/main.c
-#     C:/Users/evari/Desktop/borrar/STM32F103C6/Debug/SYSTEM~1.o: TOOL=CC
-#        C:/Users/evari/Desktop/borrar/STM32F103C6/system_stm32f1xx.c
-#     C:/Users/evari/Desktop/borrar/STM32F103C6/Debug/STARTU~1.o: TOOL=ASM
-#        C:/Users/evari/Desktop/borrar/STM32F103C6/startup_stm32f103.s
-#     C:/Users/evari/Desktop/borrar/STM32F103C6/Debug/delay.o: TOOL=CC
-#        C:/Users/evari/Desktop/borrar/STM32F103C6/delay.c
-#     C:/Users/evari/Desktop/borrar/STM32F103C6/Debug/lcd.o: TOOL=CC
-#        C:/Users/evari/Desktop/borrar/STM32F103C6/lcd.c
-#     C:/Users/evari/Desktop/borrar/STM32F103C6/Debug/rlc.o: TOOL=CC
-#        C:/Users/evari/Desktop/borrar/STM32F103C6/rlc.c
-#     C:/Users/evari/Desktop/borrar/STM32F103C6/Debug/rc.o: TOOL=CC
-#        C:/Users/evari/Desktop/borrar/STM32F103C6/rc.c
+#  G:/Mi unidad/Ing Computacion/Facultad/Cuarto año/Taller de proyecto I/Practica/TP3/Proteusdef/Cap_Ind/STM32F103C6/Debug/Debug.elf: TOOL=LD
+#     G:/Mi unidad/Ing Computacion/Facultad/Cuarto año/Taller de proyecto I/Practica/TP3/Proteusdef/Cap_Ind/STM32F103C6/Debug/main.o: TOOL=CC
+#        G:/Mi unidad/Ing Computacion/Facultad/Cuarto año/Taller de proyecto I/Practica/TP3/Proteusdef/Cap_Ind/STM32F103C6/main.c
+#     G:/Mi unidad/Ing Computacion/Facultad/Cuarto año/Taller de proyecto I/Practica/TP3/Proteusdef/Cap_Ind/STM32F103C6/Debug/system_stm32f1xx.o: TOOL=CC
+#        G:/Mi unidad/Ing Computacion/Facultad/Cuarto año/Taller de proyecto I/Practica/TP3/Proteusdef/Cap_Ind/STM32F103C6/system_stm32f1xx.c
+#     G:/Mi unidad/Ing Computacion/Facultad/Cuarto año/Taller de proyecto I/Practica/TP3/Proteusdef/Cap_Ind/STM32F103C6/Debug/startup_stm32f103.o: TOOL=ASM
+#        G:/Mi unidad/Ing Computacion/Facultad/Cuarto año/Taller de proyecto I/Practica/TP3/Proteusdef/Cap_Ind/STM32F103C6/startup_stm32f103.s
+#     G:/Mi unidad/Ing Computacion/Facultad/Cuarto año/Taller de proyecto I/Practica/TP3/Proteusdef/Cap_Ind/STM32F103C6/Debug/delay.o: TOOL=CC
+#        G:/Mi unidad/Ing Computacion/Facultad/Cuarto año/Taller de proyecto I/Practica/TP3/Proteusdef/Cap_Ind/STM32F103C6/delay.c
+#     G:/Mi unidad/Ing Computacion/Facultad/Cuarto año/Taller de proyecto I/Practica/TP3/Proteusdef/Cap_Ind/STM32F103C6/Debug/lcd.o: TOOL=CC
+#        G:/Mi unidad/Ing Computacion/Facultad/Cuarto año/Taller de proyecto I/Practica/TP3/Proteusdef/Cap_Ind/STM32F103C6/lcd.c
+#     G:/Mi unidad/Ing Computacion/Facultad/Cuarto año/Taller de proyecto I/Practica/TP3/Proteusdef/Cap_Ind/STM32F103C6/Debug/rlc.o: TOOL=CC
+#        G:/Mi unidad/Ing Computacion/Facultad/Cuarto año/Taller de proyecto I/Practica/TP3/Proteusdef/Cap_Ind/STM32F103C6/rlc.c
+#     G:/Mi unidad/Ing Computacion/Facultad/Cuarto año/Taller de proyecto I/Practica/TP3/Proteusdef/Cap_Ind/STM32F103C6/Debug/rc.o: TOOL=CC
+#        G:/Mi unidad/Ing Computacion/Facultad/Cuarto año/Taller de proyecto I/Practica/TP3/Proteusdef/Cap_Ind/STM32F103C6/rc.c
 
 # Build tree:
 all:	Debug
 
 Debug:	Debug.elf
 
-Debug.elf:	main.o SYSTEM~1.o STARTU~1.o delay.o lcd.o rlc.o rc.o 
-	$(LD)  $(LDFLAGS)  "main.o" "SYSTEM~1.o" "STARTU~1.o" "delay.o" "lcd.o" "rlc.o" "rc.o" --output "Debug.elf"
+Debug.elf:	main.o system_stm32f1xx.o startup_stm32f103.o delay.o lcd.o rlc.o rc.o 
+	$(LD)  $(LDFLAGS)  "main.o" "system_stm32f1xx.o" "startup_stm32f103.o" "delay.o" "lcd.o" "rlc.o" "rc.o" --output "Debug.elf"
 
 main.o:	../main.c 
 	$(CC) $(CCFLAGS)  "../main.c" -c -o "main.o"
 
-SYSTEM~1.o:	../system_stm32f1xx.c 
-	$(CC) $(CCFLAGS)  "../system_stm32f1xx.c" -c -o "SYSTEM~1.o"
+system_stm32f1xx.o:	../system_stm32f1xx.c 
+	$(CC) $(CCFLAGS)  "../system_stm32f1xx.c" -c -o "system_stm32f1xx.o"
 
-STARTU~1.o:	../startup_stm32f103.s 
-	$(ASM) $(ASMFLAGS)  "../startup_stm32f103.s" -o "STARTU~1.o"
+startup_stm32f103.o:	../startup_stm32f103.s 
+	$(ASM) $(ASMFLAGS)  "../startup_stm32f103.s" -o "startup_stm32f103.o"
 
 delay.o:	../delay.c 
 	$(CC) $(CCFLAGS)  "../delay.c" -c -o "delay.o"
@@ -71,8 +71,8 @@ tidy:
 clean:	tidy
 	rm -rf Debug.elf
 	rm -rf main.o
-	rm -rf SYSTEM~1.o
-	rm -rf STARTU~1.o
+	rm -rf system_stm32f1xx.o
+	rm -rf startup_stm32f103.o
 	rm -rf delay.o
 	rm -rf lcd.o
 	rm -rf rlc.o

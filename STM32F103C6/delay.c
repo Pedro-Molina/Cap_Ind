@@ -15,7 +15,7 @@ void delay_us (uint32_t t)
 
 void delay()
 {
-   TIM2->ARR = 65535;
+   TIM2->ARR = 64515;
    TIM2->SR = 0; /* clear the UIF flag */
    TIM2->CR1 = 1; /* up counting */
    while((TIM2->SR & (1<<0)) == 0); /* wait until the UIF flag is set */
@@ -25,7 +25,7 @@ void delay()
 
 void delayTimer(){
       uint32_t i;
-      for(i=0;i<30;i++){
+      for(i=0;i<31;i++){
 	    delay();
       }
 }
