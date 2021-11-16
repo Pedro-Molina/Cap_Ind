@@ -9,7 +9,6 @@
 
 
 
-
 volatile 	uint32_t L2=0,aux,j;
 int main (void)
 {
@@ -28,21 +27,15 @@ int main (void)
    while(1){
       medirRC();
       GPIOB->BRR |= (1<<0);
-      delay_us(250000);
+     delayTimer();
       
-      L2 = 1000000.0*RLC_measure()-100;
+      L2 = 1000000.0*RLC_measure();
       imprimir(L2,4,1,"uH");
-      delay_us(250000);
+      delayTimer();
    }
 
 }   
  
- 
-
-
-
-
-
 
 
 

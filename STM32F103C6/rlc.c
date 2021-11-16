@@ -12,8 +12,6 @@ void RLC_init(){
 
 	TIM2->CCMR2 = 0x001; /* Pin TIM2_CH3 as input for channel 3 */
 	TIM2->CCER = (0x1<< 8); /*CC3P = 0 (rising), CC3E = 1 */
-	//TIM2->PSC = 7200-1;
-	TIM2->ARR = 50000-1;
 }
 float RLC_measure(){
 	GPIOB -> ODR|=(1<<0);
